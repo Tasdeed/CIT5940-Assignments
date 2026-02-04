@@ -1,11 +1,12 @@
 ## Please enter your personal info here:
-Name:
+Name: Tasdid Hossain
 
-PennKey (e.g., taliem):
+PennKey (e.g., taliem): thossain 40621898
 
 
 # Part 1:
 ## Are Alicia and Lloyd both wrong, or perhaps both right? Is only one of them correct? Why?
+Lloyd is right because (assuming ArrayList) getting size and an index is O(1) which makes the first overall snippet constant time. The second snippet removes an element which is O(n) meanwhile the indexed elements are constant times which makes the overall second snippet O(n).
 
 
 # Part 2:
