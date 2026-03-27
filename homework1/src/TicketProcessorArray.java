@@ -1,31 +1,32 @@
 package homework1.src;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TicketProcessor {
+public class TicketProcessorArray {
     public static void main(String[] args) {
-        processTicketsLinkedList();
-
+        processTicketsArrayList();
     }
 
-    public static void processTicketsLinkedList() {
 
-        LinkedList<String> ticketQueue = new LinkedList<>();
 
-        // Uncomment the queue length you want to test with
+    public static void processTicketsArrayList() {
+        ArrayList<String> ticketQueue = new ArrayList<>();
+
         // createShortQueue(ticketQueue);
         createLongQueue(ticketQueue);
 
         long startTime = System.nanoTime();
 
-        while (!ticketQueue.isEmpty()) {
-            // grab the first item in the list
-            String currentTicket = ticketQueue.remove(0); 
-            
+        int front = 0;
+
+        while (front < ticketQueue.size()) {
+            String currentTicket = ticketQueue.get(front);
+            front++;
+
             System.out.println("Processing: " + currentTicket);
 
-            System.out.println("Finished! Remaining in line: " + ticketQueue.size());
+            System.out.println("Finished! Remaining in line: " + (ticketQueue.size() - front));
             System.out.println("---------------------------");
         }
 
@@ -33,20 +34,23 @@ public class TicketProcessor {
         long duration = (endTime - startTime) / 1_000_000;
 
         System.out.println(duration);
-        System.out.println("LL");
+        System.out.println("ARRAYLIST");
+        
     }
 
-    public static void createShortQueue(List<String> queue) {
+    public static void createShortQueue(ArrayList<String> queue) {
         // feel free to change the number of tickets here to test different queue sizes
         for (int i = 1; i <= 50; i++) {
             queue.add("Ticket #" + i);
         }
     }
 
-    public static void createLongQueue(List<String> queue) {
+    public static void createLongQueue(ArrayList<String> queue) {
         // feel free to change the number of tickets here to test different queue sizes
         for (int i = 1; i <= 20000; i++) {
             queue.add("Ticket #" + i);
         }
     }
 }
+
+

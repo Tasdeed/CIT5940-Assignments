@@ -51,7 +51,7 @@ public class FindFirstInstance {
         
         // uncomment one of the grids below to test the methods
         // int[][] grid = getGridOne();
-        // int[][] grid = getGridTwo();
+        int[][] grid = getGridTwo();
         
         int target = 5;
         
@@ -59,7 +59,7 @@ public class FindFirstInstance {
 
         // uncomment one of the methods below to test it
         // findFirstInstanceOne(grid, target);
-        // findFirstInstanceTwo(grid, target);
+        findFirstInstanceTwo(grid, target);
 
         long end = System.nanoTime(); // end testing runtime
 
