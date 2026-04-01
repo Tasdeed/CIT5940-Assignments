@@ -221,15 +221,21 @@ public class BookRecommender {
         return sj.toString();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         if (args.length < 3) {
             System.out.println("Too little arguments");
             return;
         }
 
-        String csvFile  = args[0];
-        String command  = args[1];
-        BookRecommender br = new BookRecommender(csvFile);
+        String csvFile = args[0];
+        String command = args[1];
+        BookRecommender br;
+        try {
+            br = new BookRecommender(csvFile);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+            return;
+        }
 
         switch (command) {
             case "single_book_mn":
