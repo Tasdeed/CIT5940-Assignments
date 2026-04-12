@@ -9,8 +9,31 @@ import java.io.File;
 public class PathFinder {
     public static final String COMMA_DELIMITER = ",";
 
-    List<int[]> edges = new ArrayList<>();
-    Map<Integer, String[]> nodes = new HashMap<>();
+    static class Node {
+        int id;
+        String name;
+        double lat, lon;
+
+        Node(int id, String name, double lat, double lon) {
+            this.id = id;
+            this.name = name;
+            this.lat = lat;
+            this.lon = lon;
+        }
+    }
+
+    static class Edge {
+        int target;
+        double weight; 
+
+        Edge(int target, double weight) {
+            this.target = target;
+            this.weight = weight;
+        }
+    }
+
+    Map<Integer, List<Edge>> graph = new HashMap<>();
+    Map<Integer, Node> nodes = new HashMap<>();
 
     public PathFinder() throws FileNotFoundException {
         loadEdges("homework4/septa_edges.csv");
@@ -24,9 +47,19 @@ public class PathFinder {
                 String line = scanner.nextLine().trim();
                 if (line.isEmpty()) continue;
                 String[] values = line.split(COMMA_DELIMITER);
-                edges.add(new int[] {
-                    Integer.parseInt(values[0].trim()), Integer.parseInt(values[1].trim())
-                });
+                int src = Integer.parseInt(values[0].trim());
+                int target = Integer.parseInt(values[1].trim());
+
+                double distance = haversine(nodes.get(src), nodes.get(target));
+                
+                if (!graph.containsKey(src)) {
+                    graph.put(src, new ArrayList<>());
+                }
+                graph.get(src).add(new Edge(target, distance));
+                if (!graph.containsKey(target)) {
+                    graph.put(target, new ArrayList<>());
+                }
+                graph.get(target).add(new Edge(src, distance));
             }
         }
     }
@@ -39,12 +72,23 @@ public class PathFinder {
                 if (line.isEmpty()) continue;
                 String[] values = line.split(COMMA_DELIMITER);
                 int stopId = Integer.parseInt(values[0].trim());
-                nodes.put(stopId, new String[]{
-                    values[1].trim(), // name
-                    values[2].trim(), // lat
-                    values[3].trim() // long
-                });
+                nodes.put(stopId, new Node(
+                    stopId, values[1].trim(), Double.parseDouble(values[2].trim()), Double.parseDouble(values[3].trim())
+                ));
             }
         }
     }
+
+    private double haversine(Node a, Node b) {
+        // convert to radians 
+        double lat = Math.toRadians(a.lat);
+        double lat2 = Math.toRadians(b.lat);
+        double lonDiff = Math.toRadians(b.lon - a.lon);
+        
+        //inside square root
+        double beforeSquare = (Math.pow(Math.sin((lat - lat2) / 2), 2)) + (Math.cos(lat)* Math.cos(lat2) * (Math.pow(Math.sin((lonDiff) / 2), 2)));
+        return 6371 * 2 * Math.asin(Math.sqrt(beforeSquare));
+    }
+
+    public List<Integer> 
 }
