@@ -79,6 +79,13 @@ class PathFinder:
             heapq.heappush(heap, (v.f, str(v.id), next(counter), v))
 
     def algo(self, start_id, end_id):
+
+        if start_id not in self.nodes or end_id not in self.nodes:
+            return None
+    
+        if start_id not in self.graph:
+            return None
+        
         self.init_algo(start_id, end_id)
 
         counter = iter(range(10**9))  # unique tiebreaker to avoid comparing Nodes

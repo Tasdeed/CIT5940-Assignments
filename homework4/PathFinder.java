@@ -121,6 +121,15 @@ public class PathFinder {
     }
 
     public List<Integer> algo(int startId, int endId) {
+
+        if (!nodes.containsKey(startId) || !nodes.containsKey(endId)) {
+            return null;
+        }
+        
+        if (!graph.containsKey(startId)) {
+            return null;
+        }
+
         initAlgo(startId, endId);
 
         PriorityQueue<Node> Q = new PriorityQueue<>((a, b) -> {
