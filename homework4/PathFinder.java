@@ -146,6 +146,7 @@ public class PathFinder {
             Node u = Q.poll();
 
             if (u.id == endId) {
+                if (u.d == Double.MAX_VALUE) return null; //IF NOT REACAHBALE
                 return reconstructPath(endId);
             }
 

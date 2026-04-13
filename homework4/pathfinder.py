@@ -104,6 +104,8 @@ class PathFinder:
                 continue 
 
             if u.id == end_id:
+                if u.d == float('inf'):
+                    return None #unreachable
                 return self.reconstruct_path(end_id)
 
             visited.add(u.id)
