@@ -162,35 +162,39 @@ public class PathFinder {
         return path;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        if (args.length < 5) {
-            System.out.println("Not enough arguments");
-            return;
-        }
-
-        String nodesFile = args[0];
-        String edgesFile = args[1];
-        int source = Integer.parseInt(args[3]);
-        int goal = Integer.parseInt(args[4]);
-
-        PathFinder pf = new PathFinder(nodesFile, edgesFile);
-        List<Integer> path = pf.algo(source, goal);
-
-        if (path == null) {
-            System.out.println("NONE");
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < path.size(); i++) {
-                if (i > 0) sb.append("->");
-                sb.append(path.get(i));
+    public static void main(String[] args) {
+        try {
+            if (args.length < 5) {
+                System.out.println("Not enough arguments");
+                return;
             }
-            System.out.println(sb);
-
-            double total = 0;
-            for (int i = 0; i < path.size() - 1; i++) {
-                total += pf.haversine(pf.nodes.get(path.get(i)), pf.nodes.get(path.get(i+1)));
+    
+            String nodesFile = args[0];
+            String edgesFile = args[1];
+            int source = Integer.parseInt(args[3]);
+            int goal = Integer.parseInt(args[4]);
+    
+            PathFinder pf = new PathFinder(nodesFile, edgesFile);
+            List<Integer> path = pf.algo(source, goal);
+    
+            if (path == null) {
+                System.out.println("NONE");
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < path.size(); i++) {
+                    if (i > 0) sb.append("->");
+                    sb.append(path.get(i));
+                }
+                System.out.println(sb);
+    
+                double total = 0;
+                for (int i = 0; i < path.size() - 1; i++) {
+                    total += pf.haversine(pf.nodes.get(path.get(i)), pf.nodes.get(path.get(i + 1)));
+                }
+                System.out.printf("%.2f%n", total);
             }
-            System.out.printf("%.2f%n", total);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
         }
     }
 }
